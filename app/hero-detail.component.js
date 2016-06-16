@@ -10,11 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
+var hero_1 = require('./hero');
 var hero_service_1 = require('./hero.service');
 var HeroDetailComponent = (function () {
     function HeroDetailComponent(heroService, routeParams) {
         this.heroService = heroService;
         this.routeParams = routeParams;
+        this.close = new core_1.EventEmitter();
+        this.navigated = false; // true if navigated here
     }
     HeroDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -25,11 +28,19 @@ var HeroDetailComponent = (function () {
     HeroDetailComponent.prototype.goBack = function () {
         window.history.back();
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', hero_1.Hero)
+    ], HeroDetailComponent.prototype, "hero", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], HeroDetailComponent.prototype, "close", void 0);
     HeroDetailComponent = __decorate([
         core_1.Component({
             selector: 'my-hero-detail',
             templateUrl: 'app/hero-detail.component.html',
-            styleUrls: ['hero-detail.component.css']
+            styleUrls: ['app/hero-detail.component.css']
         }), 
         __metadata('design:paramtypes', [hero_service_1.HeroService, router_deprecated_1.RouteParams])
     ], HeroDetailComponent);
