@@ -17,9 +17,33 @@ var HeroesComponent = (function () {
         this.heroService = heroService;
         this.router = router;
         this.title = 'Tour of Heroes';
+        this.addingHero = false;
     }
     HeroesComponent.prototype.ngOnInit = function () {
         this.getHeroes();
+    };
+    HeroesComponent.prototype.addHero = function () {
+        this.addingHero = true;
+        this.selectedHero = null;
+    };
+    HeroesComponent.prototype.close = function (savedHero) {
+        this.addingHero = false;
+        if (savedHero) {
+            this.getHeroes();
+        }
+    };
+    HeroesComponent.prototype.delete = function (hero, event) {
+        var _this = this;
+        event.stopPropagation();
+        this.heroService
+            .delete(hero)
+            .then(function (res) {
+            _this.heroes = _this.heroes.filter(function (h) { return h !== hero; });
+            if (_this.selectedHero === hero) {
+                _this.selectedHero = null;
+            }
+        })
+            .catch(function (error) { return _this.error = error; }); // TODO: Display error message
     };
     HeroesComponent.prototype.getHeroes = function () {
         var _this = this;
